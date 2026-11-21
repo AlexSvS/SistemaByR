@@ -1,0 +1,27 @@
+services:
+  solr:
+    image: solr:9.8
+    container_name: solr_es
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr_data:/var/solr
+      - ./solr:/opt/solr/server/solr/configsets/es_search:ro
+    command: solr-precreate es_search /opt/solr/server/solr/configsets/es_search
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8983/solr/"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  web:
+    build: ./web
+    container_name: solr_es_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+    depends_on:
+      solr:
+        condition: service_started
+volumes:
+  solr_data:

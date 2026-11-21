@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+ <luceneMatchVersion>9.8.0</luceneMatchVersion>
+ <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}"/>
+ <schemaFactory class="ClassicIndexSchemaFactory"/>
+ <requestHandler name="/select" class="solr.SearchHandler">
+  <lst name="defaults"><str name="echoParams">explicit</str><int name="rows">10</int></lst>
+ </requestHandler>
+ <requestHandler name="/update" class="solr.UpdateRequestHandler"/>
+ <searchComponent name="terms" class="solr.TermsComponent"/>
+ <requestHandler name="/terms" class="solr.SearchHandler">
+  <lst name="defaults"><str name="terms">true</str></lst>
+  <arr name="components"><str>terms</str></arr>
+ </requestHandler>
+</config>
