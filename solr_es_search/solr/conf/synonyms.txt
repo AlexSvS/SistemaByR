@@ -1,1 +1,5 @@
-computadora, ordenador, pc\nprogramación, desarrollo de software\ninteligencia artificial, ia\nbuscador, motor de búsqueda\n
+computadora, ordenador, pc
+coche, automóvil, auto
+móvil, celular, teléfono
+software, programa, aplicación
+estudiante, alumno
