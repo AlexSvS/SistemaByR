@@ -42,5 +42,26 @@ try{
   $data=solr('/terms',['terms.fl'=>'suggest','terms.limit'=>200,'wt'=>'json']);
   respond($data['terms']['suggest']??[]);
  }
+ if ($action === 'categories') {
+    $data = solr('/select', [
+        'q' => '*:*',
+        'rows' => 0,
+        'facet' => 'true',
+        'facet.field' => 'category',
+        'facet.limit' => -1,
+        'facet.mincount' => 1,
+        'wt' => 'json'
+    ]);
+
+    $categories = $data['facet_counts']['facet_fields']['category'] ?? [];
+
+    $result = [];
+
+    for ($i = 0; $i < count($categories); $i += 2) {
+        $result[] = $categories[$i];
+    }
+
+    respond($result);
+}
  throw new Exception('Acción no válida');
 }catch(Throwable $e){http_response_code(400);respond(['error'=>$e->getMessage()]);}
